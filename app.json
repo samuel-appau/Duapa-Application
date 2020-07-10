@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "cscd322",
-    "slug": "FirstApp",
+    "name": "DuapaApp",
+    "slug": "duapa-app",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [

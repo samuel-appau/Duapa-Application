@@ -5,10 +5,13 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import SearchScreen from '../screens/SearchScreen';
-import NotificationScreen from '../screens/NotificationScreen';
 
-import MessageScreen from '../screens/MessageScreen';
+import RegistrationScreen from '../screens/RegistrationScreen'
+import Login from '../screens/Login'
+import CallScreen from '../screens/CallScreen'
+import AgroInput from '../screens/AgroInput'
+import ProfileScreen from '../screens/ProfileScreen'
+import PaymentScreen from '../screens/PaymentScreen'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -27,71 +30,71 @@ HomeStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       name= "ios-home"
+      focused={focused}
       
     />
   ),
+  tabBarOptions:{
+    style:{backgroundColor:'green'}
+}
+ 
 };
 
 HomeStack.path = '';
 
-const SearchStack = createStackNavigator(
+const ContactStack = createStackNavigator(
   {
-    Links: SearchScreen,
+    Links: CallScreen,
   },
   config
 );
 
-SearchStack.navigationOptions = {
-  tabBarLabel: 'Search',
+ContactStack.navigationOptions = {
+  tabBarLabel: 'Contact',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon name="ios-search" />
+    <TabBarIcon name="md-book" focused={focused} />
   ),
+  tabBarOptions:{
+    style:{backgroundColor:'green'}
+}
 };
 
-SearchStack.path = '';
+ContactStack.path = '';
 
-const NotificationStack = createStackNavigator(
+const ProfileStack = createStackNavigator(
   {
-    Settings: NotificationScreen,
+    Settings: ProfileScreen,
   },
   config
 );
 
-NotificationStack.navigationOptions = {
-  tabBarLabel: 'Notifications',
+ProfileStack.navigationOptions = {
+  tabBarLabel: 'Profile',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name="ios-notifications" />
+    <TabBarIcon focused={focused} name="md-menu" />
   ),
+  tabBarOptions:{
+    style:{backgroundColor:'green'}
+}
 };
 
-NotificationStack.path = '';
+ProfileStack.path = '';
 
 
-
-const MessageStack = createStackNavigator(
-  {
-    Settings: MessageScreen,
-  },
-  config
-);
-
-MessageStack.navigationOptions = {
-  tabBarLabel: 'Mail',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name="ios-mail" />
-  ),
-};
-
-MessageStack.path = '';
 
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
-  SearchStack,
-  NotificationStack,
-  MessageStack,
+  ContactStack,
+  ProfileStack,
+  
 });
 
+tabNavigator.navigationOptions={
+  tabBarOptions:{
+    style:{backgroundColor:'green'}
+}
+}
 tabNavigator.path = '';
 
 export default tabNavigator;
