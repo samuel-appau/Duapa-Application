@@ -27,7 +27,7 @@ const styles=StyleSheet.create({
     menuicon:{
         zIndex:9,
         position:'absolute',
-        top:10,
+        top:7,
         left:15,
         
     }

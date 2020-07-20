@@ -1,8 +1,8 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import {Text,View,StyleSheet,ActivityIndicator,TextInput,Button,Switch,TouchableOpacity,Alert,Image}  from 'react-native'
  import {firebase,firebaseDB} from '../firebase1'
-
-
+ import {Ionicons,FontAwesome,AntDesign,Entypo,EvilIcons} from '@expo/vector-icons'
+ import {UserContext} from '../context/UserContext'
 
 const handleLogin=(email,password,{navigation},setLoading)=>{
       let dataToSubmit={};
@@ -54,20 +54,28 @@ const handleLogin=(email,password,{navigation},setLoading)=>{
                             }
                          
 
-export default function Login({route,navigation}){
-    const [email,setEmail]=useState('')
+export default function Login({navigation}){
+    // const {phone,setPhone,email,setEmail}=useContext(UserContext)
+     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
-    const [phone,setPhone]=useState('')
+ const [phone,setPhone]=useState('')
     const [Loading,setLoading]=useState(false)
     const [rememberMe,setRememberMe]=useState('')
-    const [userType,setUserType]=useState('')
+ 
     
 
 
     return(
         <View style={{flex:1,marginTop:-20,backgroundColor:'#12e607'}}>
+              <View style={{flexDirection:'row',borderBottomColor:"ash",borderBottomWidth:1,backgroundColor:'green',marginBottom:7,height:70}}>
+        <TouchableOpacity style={{marginTop:34}} onPress={()=>navigation.navigate('Main')}>
+        <AntDesign name="left" color="white" size={28} />
+        </TouchableOpacity> 
+             <Text style={{fontWeight:'bold',fontSize:17,color:'white',marginLeft:120,marginTop:44,marginBottom:5}}>Login</Text>
 
-            <View  style={{borderRadius:10,marginTop:100,width:"95%",marginLeft:8,height:"62%"}}>
+        </View>
+
+            <View  style={{borderRadius:10,marginTop:50,width:"95%",marginLeft:8,height:"62%"}}>
 
                 <View style={{marginTop:20}}>  
                 <TextInput 
@@ -108,10 +116,19 @@ export default function Login({route,navigation}){
                 </TouchableOpacity>
                 </View>
 
-               <View  style={{backgroundColor:"green",marginTop:29,height:45,width:"90%",marginLeft:15,borderRadius:7}}>
+
+
+
+           <TouchableOpacity   style={{marginTop:29,marginLeft:15,borderRadius:8}} onPress={()=>handleLogin(email,password,{navigation},setLoading)}>
+             <View  style={{height:45,width:"90%",backgroundColor:"green",marginLeft:4,borderRadius:8}}>
+                 <Text style={{color:"white",alignContent:'center',alignItems:"center",fontSize:17,fontWeight:"bold",marginLeft:122,marginTop:8}}>LOGIN</Text>
+             </View>
+            </TouchableOpacity>
+               {/* <View  style={{backgroundColor:"green",marginTop:29,height:45,width:"90%",marginLeft:15,borderRadius:7}}>
                    <Button  color="white"  title="Login"  onPress={()=>handleLogin(email,password,{navigation},setLoading)}/>
                 
-               </View>
+               </View> */}
+               
                  
                {Loading &&
                 <View style={{

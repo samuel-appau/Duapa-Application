@@ -28,10 +28,10 @@ export default function CallScreen({navigation}){
     return (
       <View style={styles.container}>
           <Image  source={require('../assets/images/cover.jpg')} style={{height:'100%',width:'100%',marginTop:-28}}/>
-        
+          <Text style={{marginTop:-400}}>Call/Chat with a customer service agent</Text>
             <View
 
-            style={{justifyContent: 'center',alignItems: 'center',flexDirection: 'row',marginTop:-56}}>
+            style={{justifyContent: 'center',alignItems: 'center',flexDirection: 'row',marginTop:250}}>
 
             <TouchableOpacity
 
@@ -62,6 +62,8 @@ export default function CallScreen({navigation}){
             </TouchableOpacity>
 
           </View>
+
+          
 
         </View>
     );
@@ -109,26 +111,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     
         padding: 10,
-    
-        marginHorizontal: 5,
-    
-        shadowColor: '#000',
-    
-        shadowOffset: {
-    
-          width: 0,
-    
-          height: 2,
-    
-        },
-    
-        shadowOpacity: 0.25,
-    
-        shadowRadius: 3.84,
-    
-    
-    
-        elevation: 5,
+        
+            marginHorizontal: 5,
+        
+            shadowColor: '#000',
+        
+            shadowOffset: {
+        
+              width: 0,
+        
+              height: 2,
+        
+            },
+        
+            shadowOpacity: 0.25,
+        
+            shadowRadius: 3.84,
+        
+        
+        
+            elevation: 5,
     
       },
     

@@ -1,11 +1,6 @@
 import { createBrowserApp } from '@react-navigation/web';
 import { createSwitchNavigator } from 'react-navigation';
-
-
-
-
 import React from 'react';
-
 import {Platform,Dimensions} from 'react-native';
 import TabNavigator from './MainTabNavigator';
 import  {createDrawerNavigator} from 'react-navigation-drawer'
@@ -18,8 +13,18 @@ import Login from '../screens/Login'
 import CallScreen from '../screens/CallScreen'
 import PaymentScreen from '../screens/PaymentScreen'
 import AgroInput from '../screens/AgroInput'
-import OffTaker from '../screens/OffTaker'
+import OffTaker from '../screens/OffTakers'
 import MainTabNavigator from './MainTabNavigator';
+import CartScreen from '../screens/CartScreen';
+import BuyScreen from '../screens/BuyScreen';
+import MembershipPaymentForm from '../screens/MembershipPayment'
+import BorrowScreen from '../screens/borrow'
+import DifferentAmountScreen from '../screens/DifferentAmount';
+import SellProduce from '../screens/SellProduct'
+import HelpScreen from '../screens/HelpScreen'
+import AccountScreen from '../screens/AccountSettings'
+import NotificationScreen from '../screens/NotificationScreen'
+
 const WIDTH=Dimensions.get('window').width;
 
 
@@ -38,10 +43,19 @@ const DrawerNavigator=createDrawerNavigator({
   },
   Logout:{
     screen:EntryScreen
-  }
+  },
+  Help:{
+    screen:HelpScreen
+  },
+  Account:{
+    screen:AccountScreen 
   
     },
-  
+    Notification:{
+      screen:NotificationScreen
+    }
+    
+  },
       DrawerConfig
   
   
@@ -60,7 +74,13 @@ const switchNavigator = createSwitchNavigator({
   register:RegistrationScreen,
   payment:PaymentScreen,
   agroInput:AgroInput,
-  contact:CallScreen
+  contact:CallScreen,
+  cart:CartScreen,
+  buy:BuyScreen,
+  memPay:MembershipPaymentForm,
+  borrow:BorrowScreen,
+  different: DifferentAmountScreen,
+  sell:SellProduce
 });
 switchNavigator.path = '';
 

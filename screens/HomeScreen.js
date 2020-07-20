@@ -26,7 +26,7 @@ export default function HomeScreen({navigation}){
          </View>
          </TouchableOpacity>
 
-         <TouchableOpacity >
+         <TouchableOpacity onPress={()=>navigation.navigate('sell')}>
          <View style={styles.container}>
          <View style={{flexDirection:'row'}}>
            <View  style={{flex:1}}>
@@ -47,10 +47,10 @@ export default function HomeScreen({navigation}){
          <View style={styles.container}>
          <View style={{flexDirection:'row'}}>
            <View  style={{flex:1}}>
-           <EvilIcons name="spinner-3" size={35} color="black" style={{marginTop:5}}/>
+           <AntDesign name="team"  size={34} style={{marginTop:5}} color="black"/>
                 </View>
-                <View style={{flex:6}}>
-                   <Text style={{fontWeight:'bold',fontSize:18,marginLeft:10,marginRight:-4,marginTop:10}}>Register As an Off-Taker</Text>
+                <View style={{flex:7}}>
+                   <Text style={{fontWeight:'bold',fontSize:18,marginLeft:10,marginRight:-4,marginTop:10}}>Membership Form</Text>
                 </View>
                 <View  style={{flex:1}}>
                 <AntDesign name="right" size={25} color="black" style={{marginLeft:10,marginTop:10}} />
@@ -101,11 +101,11 @@ HomeScreen.navigationOptions =({navigation})=> ({
 
   const styles=StyleSheet.create({
     container:{
-        borderWidth:2,
-        padding:10,
-        height:90,
-        width:"90%",
-        borderRadius:10, 
+      borderWidth:2,
+      padding:10,
+      height:90,
+      width:"90%",
+      borderRadius:10, 
         marginVertical:10,
         alignItems:'center',
         shadowColor:'black',

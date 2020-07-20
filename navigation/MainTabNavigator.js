@@ -2,15 +2,17 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import {Feather,AntDesign,Ionicons} from '@expo/vector-icons'
 
 import TabBarIcon from '../components/TabBarIcon';
+import AntDesignIcon from '../components/AntDesignIcons'
 import HomeScreen from '../screens/HomeScreen';
-
+import FontAwesomeIcon from '../components/FontAwesomeIcon'
 import RegistrationScreen from '../screens/RegistrationScreen'
 import Login from '../screens/Login'
 import CallScreen from '../screens/CallScreen'
 import AgroInput from '../screens/AgroInput'
-import ProfileScreen from '../screens/ProfileScreen'
+import LoanScreen from '../screens/LoanScreen'
 import PaymentScreen from '../screens/PaymentScreen'
 
 const config = Platform.select({
@@ -52,7 +54,7 @@ const ContactStack = createStackNavigator(
 ContactStack.navigationOptions = {
   tabBarLabel: 'Contact',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon name="md-book" focused={focused} />
+    <AntDesignIcon name="customerservice" focused={focused} />
   ),
   tabBarOptions:{
     style:{backgroundColor:'green'}
@@ -61,24 +63,24 @@ ContactStack.navigationOptions = {
 
 ContactStack.path = '';
 
-const ProfileStack = createStackNavigator(
+const LoanStack = createStackNavigator(
   {
-    Settings: ProfileScreen,
+    Settings: LoanScreen,
   },
   config
 );
 
-ProfileStack.navigationOptions = {
-  tabBarLabel: 'Profile',
+LoanStack.navigationOptions = {
+  tabBarLabel: 'Loan',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name="md-menu" />
+    <FontAwesomeIcon focused={focused} name="credit-card" />
   ),
   tabBarOptions:{
     style:{backgroundColor:'green'}
 }
 };
 
-ProfileStack.path = '';
+LoanStack.path = '';
 
 
 
@@ -86,7 +88,7 @@ ProfileStack.path = '';
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   ContactStack,
-  ProfileStack,
+  LoanStack,
   
 });
 

@@ -1,8 +1,8 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import {Text,View,StyleSheet,ActivityIndicator,TextInput,Button,Switch,TouchableOpacity,Alert,Image}  from 'react-native'
 import {firebase} from '../firebase1'
 import {Ionicons,FontAwesome,AntDesign,Entypo,EvilIcons} from '@expo/vector-icons'
-
+import {UserContext} from '../context/UserContext'
 
 const handleRegistration=(email,password,{navigation},setLoading,phone)=>{
     
@@ -30,22 +30,22 @@ const handleRegistration=(email,password,{navigation},setLoading,phone)=>{
                              
 
 export default  function RegisterScreen({navigation}){
-
+    const {name,setName,phone,setPhone,email,setEmail}=useContext(UserContext)
     const [password,setPassword]=useState('')
-    const [name,setName]=useState('')
-    const [phone,setPhone]=useState('')
-    const [email,setEmail]=useState('')
+    //  const [name,setName]=useState('')
+    //  const [phone,setPhone]=useState('')
+    //  const [email,setEmail]=useState('')
     const [Loading,setLoading]=useState(false)
     const [confirmPassword,setConfirmPassword]=useState('')
     
 
     return(
         <View style={{flex:1}}>
-             <View style={{flexDirection:'row',borderBottomColor:"ash",borderBottomWidth:1,backgroundColor:'green',marginBottom:10,height:62}}>
-        <TouchableOpacity style={{marginTop:15}} onPress={()=>navigation.navigate('Main')}>
+             <View style={{flexDirection:'row',borderBottomColor:"ash",borderBottomWidth:1,backgroundColor:'green',marginBottom:7,height:68}}>
+        <TouchableOpacity style={{marginTop:25}} onPress={()=>navigation.navigate('Main')}>
         <AntDesign name="left" color="white" size={28}  />
         </TouchableOpacity> 
-             <Text style={{fontWeight:'bold',fontSize:17,color:'white',marginLeft:90,marginTop:17.5,marginBottom:5}}>Register</Text>
+             <Text style={{fontWeight:'bold',fontSize:17,color:'white',marginLeft:120,marginTop:22,marginBottom:5}}>Register</Text>
 
         </View>
             <View>
@@ -119,10 +119,18 @@ export default  function RegisterScreen({navigation}){
                />
                </View>
 
-               <View style={{backgroundColor:'green',marginTop:20,height:45,width:"98%",marginLeft:4}}>
+
+
+               <TouchableOpacity onPress={()=>handleRegistration(email,password,{navigation},setLoading,phone)} style={{marginTop:20,}}>
+                        <View style={{ padding: 13,backgroundColor:'green',marginHorizontal:5,width:'98%',height:45,shadowColor: '#000', shadowOffset: { width: 0, height: 2,},shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5,}}>
+                             <Text style={{color:"white",fontWeight:'bold',fontSize:19,marginLeft:124,marginTop:-4}}>Register</Text>
+                        </View>
+             </TouchableOpacity>
+
+               {/* <View style={{backgroundColor:'green',marginTop:20,height:45,width:"98%",marginLeft:4}}>
                <Button title="Register" color='white'   style={{width:'98%'}} onPress={()=>handleRegistration(email,password,{navigation},setLoading,phone)}/>
                {/* color='white'  */}
-                </View>
+                {/* </View> */} 
 
                    
                {Loading &&

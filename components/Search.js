@@ -17,7 +17,7 @@ const Search = () => {
     <View style={styles.container}>
       <TextInput
         style={styles.textInput}
-        placeholder="Search Value"
+        placeholder="Search for something"
         value={searchText}
         onChangeText={(searchText) => setsearchText(searchText)}
       ></TextInput>
@@ -55,5 +55,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     paddingLeft: 5,
     color: '#fff',
+   
   },
 });

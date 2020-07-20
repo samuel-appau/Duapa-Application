@@ -1,33 +1,31 @@
-import React,{useState} from 'react'
-import {Text,View,StyleSheet,TextInput,Button,Image,ActivityIndicator,Picker,Alert} from 'react-native'
-import {Feather} from '@expo/vector-icons'
-import { ScrollView } from 'react-native-gesture-handler'
+import React,{useState,useContext} from 'react'
+import {Text,View,StyleSheet,ScrollView,TextInput,Button,Image,Modal,ActivityIndicator,TouchableOpacity,Picker,Alert} from 'react-native'
+import {Feather,AntDesign,Ionicons} from '@expo/vector-icons'
+
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import {firebase,firebaseDB} from '../firebase1'
-
-
+import {UserContext} from '../context/UserContext'
+ 
 
 
 const MGender=[
-    'MTN-MOMO',
-   'VODA-CASH',
-   'MicroCredits',
-    'Bank'
+    'MALE',
+    'FEMALE'
  ]
 
 
 
 
-getPermissionAsync = async () => {
-  if (Constants.platform.ios) {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status !== 'granted') {
-      alert('Sorry, we need camera roll permissions to make this work!');
-    }
-  }
-}
+// getPermissionAsync = async () => {
+//   if (Constants.platform.ios) {
+//     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+//     if (status !== 'granted') {
+//       alert('Sorry, we need camera roll permissions to make this work!');
+//     }
+//   }
+// }
 
 const pickImage = async (setImage) => {
   let result = await ImagePicker.launchImageLibraryAsync({
@@ -45,12 +43,12 @@ const pickImage = async (setImage) => {
 };
 
 
-const handleSubmit=(setLoading,name,email,Location,Tel,image,Address)=>{
+const handleSubmit=(setLoading,name,email,Location,phone,image,Address)=>{
   let dataToSubmit={
     name,
     email,
     Location,
-    Tel,
+    phone,
     image,
     Address
 
@@ -75,30 +73,32 @@ const handleSubmit=(setLoading,name,email,Location,Tel,image,Address)=>{
 
 
 
-export default function OffTakers({navigation}){
+export default function OffTaker({navigation}){
+  const {name,setName,phone,setPhone,email,setEmail}=useContext(UserContext)
   const [image,setImage]=useState(null);
   const [Loading,setLoading]=useState(false)
-  const [name,setName]=useState('')
-  const [email,setEmail]=useState('')
+  //  const [name,setName]=useState('')
+    // const [email,setEmail]=useState('')
   const [Location,setLocation]=useState('')
-  const [Tel,setTel]=useState('')
+//  const [phone,setPhone]=useState('')
   const [search,setsearch]=useState('')
   const [Address,setAddress]=useState('')
 
   
     return(
         <View style={{flex:1}}>
+          
          <View style={{flexDirection:'row',borderBottomColor:"ash",borderBottomWidth:1,backgroundColor:'green',marginBottom:10,height:65}}>
          <TouchableOpacity style={{marginTop:24}} onPress={()=>navigation.navigate('Root')}>
          <AntDesign name="left" color="white" size={30}   />
            </TouchableOpacity>
-             <Text style={{fontSize:17,color:'white',marginLeft:60,fontWeight:'bold',marginTop:31,marginBottom:5,}}>OffTaker Screen</Text>
-             <View  style={{flex:2,marginLeft:81,marginTop:28}}>
-            <Ionicons
-                    name="ios-person"
+             <Text style={{fontSize:17,color:'white',marginLeft:60,fontWeight:'bold',marginTop:31,marginBottom:5,}}>Membership Screen</Text>
+             <View  style={{flex:2,marginLeft:100,marginTop:28}}>
+            <AntDesign
+                    name="team"
                     size={24}
                     color="white"
-                    style={{marginRight:40,marginBottom:-4}}
+                    style={{marginBottom:-4}}
                 />
                 {/* <View  style={{borderRadius:40,width:17,height:17,backgroundColor:'red',alignItems:'center',justifyContent:'center',marginTop:-22.5,marginLeft:15}}>
                   <Text style={{color:"white",fontSize:10}}>{cart.length}</Text>
@@ -106,35 +106,35 @@ export default function OffTakers({navigation}){
                 
           </View>
       
-        </View>>
+        </View>
 
            <ScrollView>
             
-            <View style={{height:500,width:350,marginLeft:12,borderRadius:10,marginTop:10}}>
-            <Text style={{fontWeight:'bold',fontSize:17,marginLeft:60}}>Register As an OffTaker</Text>
+            <View style={{marginLeft:12,borderRadius:10,marginTop:10}}>
+            <Text style={{fontWeight:'bold',fontSize:17,marginLeft:60}}>Beit farms Membership Form</Text>
             <View style={{flexDirection:'row'}}>
                  <Text style={{marginTop:30,fontWeight:'bold',fontSize:15}}>Name</Text>
                  <TextInput placeholder="JohnDoe"  value={name}  onChangeText={name=>setName({name})} 
-                   style={{marginLeft:54,height:40,marginTop:22,backgroundColor:'white',width:250,borderColor:"black"}}/>
+                   style={{marginLeft:54,height:40,marginTop:22,backgroundColor:'white',width:250,borderColor:"#c0c0c0",borderWidth:1}}/>
                </View>
 
                <View style={{flexDirection:'row'}}>
                  <Text style={{marginTop:30,fontWeight:'bold',fontSize:15}}>Email</Text>
-                 <TextInput placeholder="example@gmail.com" value={email}  onChangeText={email=>setEmail({email})} style={{marginLeft:54,height:40,marginTop:22,backgroundColor:'white',width:250}}/>
+                 <TextInput placeholder="example@gmail.com" value={email}  onChangeText={email=>setEmail({email})} style={{borderColor:"#c0c0c0",borderWidth:1,marginLeft:54,height:40,marginTop:22,backgroundColor:'white',width:250}}/>
                </View>
 
                <View style={{flexDirection:'row'}}>
                  <Text style={{marginTop:30,fontWeight:'bold',fontSize:15}}>Location</Text>
-                 <TextInput placeholder="Taifa Burkina"  value={Location}  onChangeText={Location=>setLocation({Location})}style={{marginLeft:30,height:40,marginTop:22,backgroundColor:'white',width:250}}/>
+                 <TextInput placeholder="Taifa Burkina"  value={Location}  onChangeText={Location=>setLocation({Location})} style={{borderColor:"#c0c0c0",borderWidth:1,marginLeft:30,height:40,marginTop:22,backgroundColor:'white',width:250}}/>
                </View>
 
                <View style={{flexDirection:'row',marginTop:22}}>
-                 <Text style={{marginTop:12,fontWeight:'bold',fontSize:15}}>Telephone</Text>
-                 <TextInput  placeholder="024657868" value={Tel}  onChangeText={Tel=>setTel({Tel})} style={{marginLeft:20,height:40,backgroundColor:'white',width: 250}} />
+                 <Text style={{marginTop:12,fontWeight:'bold',fontSize:15}}>Phone</Text>
+                 <TextInput  placeholder="024657868" value={phone}  onChangeText={phone=>setPhone({phone})} style={{borderColor:"#c0c0c0",borderWidth:1,marginLeft:45,height:40,backgroundColor:'white',width: 250}} />
                </View>
 
                {/* <View style={{flexDirection:'row',marginTop:22}}>
-                 <Text style={{marginTop:12,fontWeight:'bold',fontSize:15}}>Gender</Text>
+                 <Text style={{marginTop:102,fontWeight:'bold',fontSize:15}}>Gender</Text>
                  <Combobox data={data} title='Select your Gender' styleItem={{marginTop:10,marginBottomWidth:1}} style={{marginLeft:43,height:40,backgroundColor:'white',width: 250,borderRadius:4}}/>
                 </View> */}
 
@@ -146,14 +146,14 @@ export default function OffTakers({navigation}){
             style={{  borderWidth: 1,
 
     borderColor: '#fff',
-
+    marginLeft:-6,
     borderRadius: 2,
 
-    paddingHorizontal: 10,
+    paddingHorizontal: 6,
 
-    paddingVertical: 5,
+    paddingVertical: 6,
 
-    marginVertical: 10,
+    marginVertical: 6,
 
     backgroundColor: '#eee',
 
@@ -200,7 +200,7 @@ export default function OffTakers({navigation}){
                   <Text style={{marginTop:12,fontWeight:'bold',fontSize:15}}>Photo</Text>
                     <View style={{flexDirection:'column',marginLeft:60}}>
                     <Button  title="Choose Image" onPress={()=>pickImage(setImage)} style={{marginLeft:50,marginTop:-10}}/>
-                     {image &&
+                    {image &&
                        <Image source={{ uri: image }} style={{ width: 100, height: 100,marginLeft:10,marginTop:-10}} />}
                     </View>
 
@@ -209,24 +209,33 @@ export default function OffTakers({navigation}){
 
                 <View style={{flexDirection:'row',marginTop:10}}>
                 <Text style={{marginTop:12,fontWeight:'bold',fontSize:15}}>Digital-Address</Text>
-                <TextInput  placeholder="GS-0362-2477" value={Address}  onChangeText={Address=>setAddress({Address})} style={{marginLeft:20,height:40,backgroundColor:'white',width: 200}} />
+                <TextInput  placeholder="GS-0362-2477" value={Address}  onChangeText={Address=>setAddress({Address})} style={{marginLeft:20,height:40,backgroundColor:'white',width: 200,borderColor:"#c0c0c0",borderWidth:1}} />
                  
 
                 </View>
                
-               <View style={{flexDirection:'row',marginTop:10}}>
-                   <TouchableOpacity>
-                        <View>
-                             <Text></Text>
+                <View style={{flexDirection:'row',marginTop:20}}>
+               <TouchableOpacity onPress={()=>navigation.navigate('memPay')} >
+               {/* onPress={()=>handleSubmit(setLoading,name,email,Location,phone,image,Address)} */}
+                        <View style={{ padding: 13,backgroundColor:"#00ccff",marginHorizontal:5,shadowColor: '#000', shadowOffset: { width: 0, height: 2,},shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5,}}>
+                             <Text style={{color:"white",fontWeight:'bold'}}>Submit</Text>
                         </View>
-                   </TouchableOpacity>
-               <View style={{backgroundColor:"#00ccff"}}>
-               <Button title='Submit' color='white' style={{width:150}}  onPress={()=>handleSubmit(setLoading,name,email,Location,Tel,image,Address)}/>
-               </View>
+                   </TouchableOpacity> 
+
+
+
+                   <TouchableOpacity onPress={()=>navigation.navigate('offTaker')}>
+                        <View style={{ padding: 13,backgroundColor:'red',marginLeft:25,marginHorizontal:5,shadowColor: '#000', shadowOffset: { width: 0, height: 2,},shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5,}}>
+                             <Text style={{color:"white",fontWeight:'bold'}}>Cancel</Text>
+                        </View>
+                   </TouchableOpacity> 
+               {/* <View style={{}}>
+               <Button title='Submit' color='white' style={{width:150}}  />
+               </View> */}
        
-               <View style={{backgroundColor:'red',marginLeft:80}}>
-               <Button title='Cancel' color='white'style={{width:250}}  onPress={()=>navigation.navigate('offTaker')} />
-               </View>
+               {/* <View style={{marginLeft:80}}>
+               <Button title='Cancel' color='white'style={{width:250}}   />
+               </View> */}
 
   
                </View>

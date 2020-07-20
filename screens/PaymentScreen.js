@@ -25,7 +25,7 @@ export default function PaymentScreen({navigation}){
         </TouchableOpacity>
              <Text style={{fontWeight:'bold',fontSize:17,color:'white',marginLeft:115,marginTop:27,marginBottom:5}}>Payment</Text>
            
-           <Ionicons name="ios-notifications" size={25} color="white"  style={{marginTop:23,marginLeft:120}}/>
+             <Ionicons name="ios-notifications" size={25} color="white"  style={{marginTop:23,marginLeft:120}}/>
         </View>
             <View style={{flexDirection:'row',marginTop:20}}>
                 <View style={{backgroundColor:'green',height:40,width:70}}>

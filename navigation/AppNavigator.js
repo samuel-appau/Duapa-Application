@@ -12,8 +12,17 @@ import Login from '../screens/Login'
 import CallScreen from '../screens/CallScreen'
 import PaymentScreen from '../screens/PaymentScreen'
 import AgroInput from '../screens/AgroInput'
-import OffTaker from '../screens/OffTaker'
+import OffTaker from '../screens/OffTakers'
 import MainTabNavigator from './MainTabNavigator';
+import CartScreen from '../screens/CartScreen'
+import BuyScreen from '../screens/BuyScreen'
+import MembershipPaymentForm from '../screens/MembershipPayment'
+import BorrowScreen from '../screens/borrow'
+import DifferentAmountScreen from '../screens/DifferentAmount';
+import SellProduce from '../screens/SellProduct'
+import HelpScreen from '../screens/HelpScreen'
+import AccountScreen from '../screens/AccountSettings'
+import NotificationScreen from '../screens/NotificationScreen'
 const WIDTH=Dimensions.get('window').width;
 
 const DrawerConfig={
@@ -31,7 +40,17 @@ const DrawerNavigator=createDrawerNavigator({
   },
   Logout:{
     screen:EntryScreen
+  },
+  Help:{
+    screen:HelpScreen
+  },
+  Account:{
+    screen:AccountScreen
+  },
+  Notification:{
+    screen:NotificationScreen
   }
+  
   
     },
   
@@ -47,13 +66,18 @@ export default createAppContainer(
     // You could add another route here for authentication.
     // Read more at https://reactnavigation.org/docs/en/auth-flow.html
     Main:EntryScreen,
-
     login:Login,
     Root:DrawerNavigator,
     register:RegistrationScreen,
     payment:PaymentScreen,
     agroInput:AgroInput,
     contact:CallScreen,
-    offTaker:OffTaker
+    offTaker:OffTaker,
+    cart:CartScreen,
+    buy:BuyScreen,
+    memPay:MembershipPaymentForm,
+    borrow:BorrowScreen,
+    different: DifferentAmountScreen,
+    sell:SellProduce
   })
 );

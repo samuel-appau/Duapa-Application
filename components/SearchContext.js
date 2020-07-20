@@ -16,4 +16,4 @@ const SearchContextProvider = ({ children }) => {
   );
 };
 
-export default SearchContextProvider;
+export {SearchContextProvider};
