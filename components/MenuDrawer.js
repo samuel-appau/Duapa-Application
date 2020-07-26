@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {StyleSheet,Dimensions,Platform, View,Text,TouchableOpacity, Button,Image}  from 'react-native'
+import {StyleSheet,Dimensions,Platform, View,Text,TouchableOpacity,Alert, Button,Image}  from 'react-native'
 import {Ionicons,AntDesign,Entypo, Feather,FontAwesome} from  '@expo/vector-icons'
 import { Linking } from 'expo';
 
@@ -8,6 +8,40 @@ const WIDTH=Dimensions.get('window').width;
 const HEIGHT=Dimensions.get('window').height;
 
 export default class MenuDrawer extends  Component{ 
+
+
+        state={
+            responseJSON:'',
+            lastName:'',
+            // photo:'http://aby.voting.tk/',
+            
+             }
+
+     
+             componentDidMount(){
+                return  fetch('http://abyvoting.tk/profile',{
+                    method:"GET",
+              
+                    })
+                  .then((response)=>response.json())
+                     .then((responseJSON)=>{
+                     Alert.alert(responseJSON.image_icon)
+                      this.setState({
+                          responseJSON:responseJSON.first_name,
+                          lastName:responseJSON.last_name,
+                          
+                        //  photo:(JSON.stringify(responseJSON.image_icon))
+                      })
+                
+                      
+                     })
+                     .catch((error)=>{
+                       Alert.alert(error)
+                     })
+                  
+                  }
+        
+        
      url="https://www.linkedin.com/"
      url1="https://www.facebook.com/beitfarms/"
      url2="https://twitter.com/Beitfarms/"
@@ -24,13 +58,22 @@ render(){
      <View  style={styles.container}>
          <View style={{backgroundColor:'#000',height:140}}>
           <View  style={{flexDirection:'row'}}>
-           <Image  source={require('../assets/images/logo.jpg')}   style={{borderRadius:42,height:89,width:89,marginTop:34}}  />
-           <Text style={{paddingTop:40,color:"white",marginTop:20,fontSize:25,marginLeft:17,fontWeight:'bold'}}>BEiT FARMS</Text>
+            
+                   <FontAwesome  name="user-circle"  size={90} color="white" style={{borderRadius:40,height:96,marginLeft:8,width:96,marginTop:34}}/>  
+
+                   {/* <Image  source={{uri:this.state.photo}}   style={{borderRadius:42,height:89,width:89,marginTop:34}}  />   */}
+               
+               
+           
+           <Text style={{paddingTop:40,color:"white",marginTop:14,fontSize:22,marginLeft:17,fontWeight:'bold'}}>DUAPA APP</Text>
         
         </View>
-        {/* <View style={{borderRadius:8,width:100,height:140,borderWidth:1,borderWidthColor:'#fff',marginLeft:95,marginTop:-29}}>
-                <Text style={{fontWeight:'bold',fontSize:18,color:'white'}}>name</Text>
-            </View> */}
+         <View style={{borderRadius:8,width:100,height:140,borderWidth:1,borderWidthColor:'#fff',marginLeft:90,marginTop:-29}}>
+                <View style={{flexDirection:'row'}}>
+                <Text style={{fontWeight:'bold',fontSize:18,color:'white',marginLeft:14}}>{this.state.responseJSON}  </Text>
+                <Text style={{fontWeight:'bold',fontSize:18,color:'white'}}>{this.state.lastName}</Text>
+            </View> 
+            </View>
        
         </View>
        

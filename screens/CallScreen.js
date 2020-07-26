@@ -12,11 +12,11 @@ const communicate = (type) => {
   
     if (Platform.OS === 'ios' && type === 'tel') {
   
-      phone = 'tel:${0503737718}';
+      phone = 'tel:${0302934450}';
   
     } else if (Platform.OS === 'ios' && type === 'sms') {
   
-      phone = 'sms:${0503737718}';
+      phone = 'sms:${0302934450}';
   
     }
   
@@ -28,10 +28,10 @@ export default function CallScreen({navigation}){
     return (
       <View style={styles.container}>
           <Image  source={require('../assets/images/cover.jpg')} style={{height:'100%',width:'100%',marginTop:-28}}/>
-          <Text style={{marginTop:-400}}>Call/Chat with a customer service agent</Text>
+          <Text style={{marginTop:-510,fontWeight:'bold'}}>Call/Chat with a customer service agent</Text>
             <View
 
-            style={{justifyContent: 'center',alignItems: 'center',flexDirection: 'row',marginTop:250}}>
+            style={{justifyContent: 'center',alignItems: 'center',flexDirection: 'row',marginTop:460}}>
 
             <TouchableOpacity
 

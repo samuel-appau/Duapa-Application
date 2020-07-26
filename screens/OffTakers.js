@@ -74,13 +74,13 @@ const handleSubmit=(setLoading,name,email,Location,phone,image,Address)=>{
 
 
 export default function OffTaker({navigation}){
-  const {name,setName,phone,setPhone,email,setEmail}=useContext(UserContext)
+  // const {name,setName,phone,setPhone,email,setEmail}=useContext(UserContext)
   const [image,setImage]=useState(null);
   const [Loading,setLoading]=useState(false)
-  //  const [name,setName]=useState('')
-    // const [email,setEmail]=useState('')
+   const [name,setName]=useState('')
+  const [email,setEmail]=useState('')
   const [Location,setLocation]=useState('')
-//  const [phone,setPhone]=useState('')
+const [phone,setPhone]=useState('')
   const [search,setsearch]=useState('')
   const [Address,setAddress]=useState('')
 

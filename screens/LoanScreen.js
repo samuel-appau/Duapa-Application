@@ -1,15 +1,40 @@
-import React,{useState} from 'react'
-import {View,Text,StyleSheet,TextInput,TouchableOpacity} from 'react-native'
+import React,{useState,useEffect} from 'react'
+import {View,Text,StyleSheet,TextInput,TouchableOpacity,Alert} from 'react-native'
 import MenuButton from '../components/Menubar'
 import SearchButton from '../components/SearchButton'
 import {Ionicons,FontAwesome,AntDesign,Entypo,EvilIcons} from '@expo/vector-icons'
 
 export default function LoanScreen({navigation}){
 const [Loading,setLoading]=useState(false)
+const [name,setName]=useState('')
+
+
+    useEffect(()=>{
+    async function fetchData(){
+
+    const response=fetch('http://abyvoting.tk/profile',{
+    method:"GET",
+
+    })
+  .then((response)=>response.json())
+     .then((responseJSON)=>{
+    //  Alert.alert(responseJSON)
+        setName(responseJSON.first_name)
+     })
+     .catch((error)=>{
+       Alert.alert(error.message)
+     })
+
+    }
+     fetchData()
+  
+  
+})
+
     return(
         <View style={{flex:1}}>
             <FontAwesome  name="user-circle"  size={70} style={{marginTop:140,marginLeft:9}}/>
-            <Text style={{marginTop:10,marginLeft:9,fontWeight:'bold',fontSize:18}}>Hi Samuel !</Text>
+            <Text style={{marginTop:10,marginLeft:9,fontWeight:'bold',fontSize:18}}>Hi {name} !</Text>
             
             <Text style={{marginTop:10,marginLeft:9}}>You haven't made any loan request.
                   Need to borrow some money ?.

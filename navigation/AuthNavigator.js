@@ -1,5 +1,9 @@
 import React from 'react';
+import { View, Text } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import Onboarding from '../screens/Onboarding';
+import RegisterScreen from '../screens/RegistrationScreen';
+import Login from '../screens/Login'
 import {Platform,Dimensions} from 'react-native';
 import TabNavigator from './MainTabNavigator';
 import  {createDrawerNavigator} from 'react-navigation-drawer'
@@ -7,8 +11,6 @@ import MenuDrawer from '../components/MenuDrawer'
 import MenuButton from '../components/Menubar'
 import SearchButton from '../components/SearchButton'
 import EntryScreen from '../screens/EntryScreen'
-import RegistrationScreen from '../screens/RegistrationScreen'
-import Login from '../screens/Login'
 import CallScreen from '../screens/CallScreen'
 import PaymentScreen from '../screens/PaymentScreen'
 import AgroInput from '../screens/AgroInput'
@@ -32,6 +34,8 @@ const DrawerConfig={
 
   }
 } 
+
+
 
 const DrawerNavigator=createDrawerNavigator({
   
@@ -60,25 +64,24 @@ const DrawerNavigator=createDrawerNavigator({
   );
   
 
-
-  export default createAppContainer(
-    createSwitchNavigator({
-    // You could add another route here for authentication.
-    // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-    // Main:EntryScreen,
-    login:Login,
-    Root:DrawerNavigator,
-    register:RegistrationScreen,
-    payment:PaymentScreen,
-    agroInput:AgroInput,
-    contact:CallScreen,
-    offTaker:OffTaker,
-    cart:CartScreen,
-    buy:BuyScreen,
-    memPay:MembershipPaymentForm,
-    borrow:BorrowScreen,
-    different: DifferentAmountScreen,
-    sell:SellProduce,
-    account:AccountScreen
+export default createAppContainer(
+  createSwitchNavigator({
+     Main:Onboarding,
+     register:RegisterScreen,
+     login:Login, login:Login,
+     Root:DrawerNavigator,
+     
+     payment:PaymentScreen,
+     agroInput:AgroInput,
+     contact:CallScreen,
+     offTaker:OffTaker,
+     cart:CartScreen,
+     buy:BuyScreen,
+     memPay:MembershipPaymentForm,
+     borrow:BorrowScreen,
+     different: DifferentAmountScreen,
+     sell:SellProduce,
+     account:AccountScreen
   })
 );
+

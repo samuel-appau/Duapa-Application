@@ -117,8 +117,8 @@ export default function BorrowScreen({navigation}){
 
                 </View>
                 <TouchableOpacity style={{marginTop:10}} >
-                        <View style={{ padding: 10,backgroundColor:'white',marginLeft:112,marginHorizontal:5,shadowColor: '#000', shadowOffset: { width: 0, height: 2,},shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5,borderWidth:1,borderColor:'green',width:130,marginBottom:6}}>
-                             <Text style={{color:"green",fontWeight:'bold',marginLeft:4}}>Request Loan</Text>
+                        <View style={{ padding: 10,backgroundColor:'white',marginLeft:'29%',marginRight:'29%',marginHorizontal:5,shadowColor: '#000', shadowOffset: { width: 0, height: 2,},shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5,borderWidth:1,borderColor:'green',width:126,marginBottom:6}}>
+                             <Text style={{color:"green",fontWeight:'bold',marginLeft:7}}>Request Loan</Text>
                         </View>
              </TouchableOpacity>
             </View>
@@ -169,7 +169,7 @@ export default function BorrowScreen({navigation}){
                  </TouchableOpacity> */}
                 </View>
                 <TouchableOpacity style={{marginTop:10}} >
-                        <View style={{ padding: 10,backgroundColor:'white',marginLeft:112,marginHorizontal:5,shadowColor: '#000', shadowOffset: { width: 0, height: 2,},shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5,borderWidth:1,borderColor:'green',width:130,marginBottom:6}}>
+                        <View style={{ padding: 10,backgroundColor:'white',marginLeft:'29%',marginRight:'29%',marginHorizontal:5,shadowColor: '#000', shadowOffset: { width: 0, height: 2,},shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5,borderWidth:1,borderColor:'green',width:130,marginBottom:6}}>
                              <Text style={{color:"green",fontWeight:'bold',marginLeft:4}}>Request Loan</Text>
                         </View>
              </TouchableOpacity>
@@ -220,7 +220,7 @@ export default function BorrowScreen({navigation}){
                  </TouchableOpacity> */}
                 </View>
                 <TouchableOpacity style={{marginTop:10}} >
-                        <View style={{ padding: 10,backgroundColor:'white',marginLeft:112,marginHorizontal:5,shadowColor: '#000', shadowOffset: { width: 0, height: 2,},shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5,borderWidth:1,borderColor:'green',width:130,marginBottom:6}}>
+                        <View style={{ padding: 10,backgroundColor:'white',marginLeft:'29%',marginRight:'29%',marginHorizontal:5,shadowColor: '#000', shadowOffset: { width: 0, height: 2,},shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5,borderWidth:1,borderColor:'green',width:130,marginBottom:6}}>
                              <Text style={{color:"green",fontWeight:'bold',marginLeft:4}}>Request Loan</Text>
                         </View>
              </TouchableOpacity>
@@ -271,7 +271,7 @@ export default function BorrowScreen({navigation}){
                  </TouchableOpacity> */}
                 </View>
                 <TouchableOpacity style={{marginTop:10}} >
-                        <View style={{ padding: 10,backgroundColor:'white',marginLeft:112,marginHorizontal:5,shadowColor: '#000', shadowOffset: { width: 0, height: 2,},shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5,borderWidth:1,borderColor:'green',width:130,marginBottom:6}}>
+                        <View style={{ padding: 10,backgroundColor:'white',marginLeft:'29%',marginRight:'29%',marginHorizontal:5,shadowColor: '#000', shadowOffset: { width: 0, height: 2,},shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5,borderWidth:1,borderColor:'green',width:130,marginBottom:6}}>
                              <Text style={{color:"green",fontWeight:'bold',marginLeft:4}}>Request Loan</Text>
                         </View>
              </TouchableOpacity>
@@ -286,7 +286,7 @@ export default function BorrowScreen({navigation}){
 
 
 
-            <View  style={{marginTop:120,marginLeft:18,}}>
+            <View  style={{marginTop:120,marginLeft:18,marginBottom:20}}>
                 <TouchableOpacity onPress={()=>navigation.navigate('different')}>
                  <Text style={{color:'green',fontWeight:'bold'}}>Want a different amount ? </Text>
                  </TouchableOpacity>

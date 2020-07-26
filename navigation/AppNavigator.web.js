@@ -24,6 +24,7 @@ import SellProduce from '../screens/SellProduct'
 import HelpScreen from '../screens/HelpScreen'
 import AccountScreen from '../screens/AccountSettings'
 import NotificationScreen from '../screens/NotificationScreen'
+// import Onboarding from '../screens/Onboarding'
 
 const WIDTH=Dimensions.get('window').width;
 
@@ -67,7 +68,8 @@ const DrawerNavigator=createDrawerNavigator({
 const switchNavigator = createSwitchNavigator({
   // You could add another route here for authentication.
   // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main:DrawerNavigator,
+
+   Main:DrawerNavigator,
   login:Login,
   // Root:MainTabNavigator,
   offTaker:OffTaker,

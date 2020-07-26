@@ -6,10 +6,12 @@ import { Platform, StatusBar, StyleSheet, View,TouchableOpacity } from 'react-na
 import { Ionicons } from '@expo/vector-icons';
  import UserContextProvider from './context/UserContext'
  import CartContextProvider from './context/CartContext'
+ import AuthNavigator from   './navigation/AuthNavigator'
 import AppNavigator from './navigation/AppNavigator';
 import { SearchContextProvider } from './components/SearchContext';
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
@@ -30,7 +32,13 @@ export default function App(props) {
          <CartContextProvider>
           <UserContextProvider >
           <SearchContextProvider> 
+            {isLoggedIn ?
+          (
         <AppNavigator />
+          )
+       : (
+                <AuthNavigator />
+              )}
          </SearchContextProvider>
          </UserContextProvider> 
          </CartContextProvider>

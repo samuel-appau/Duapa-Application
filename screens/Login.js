@@ -1,172 +1,183 @@
-import React,{useState,useContext} from 'react'
-import {Text,View,StyleSheet,ActivityIndicator,TextInput,Button,Switch,TouchableOpacity,Alert,Image}  from 'react-native'
- import {firebase,firebaseDB} from '../firebase1'
- import {Ionicons,FontAwesome,AntDesign,Entypo,EvilIcons} from '@expo/vector-icons'
- import {UserContext} from '../context/UserContext'
+import React, { Component } from "react";
 
-const handleLogin=(email,password,{navigation},setLoading)=>{
-      let dataToSubmit={};
-      for(let key in email){
-        dataToSubmit[key]=email[key]
-    }
+import {Keyboard, Text, View, TextInput,ActivityIndicator,Image, TouchableWithoutFeedback,TouchableOpacity, Alert,StyleSheet,KeyboardAvoidingView} from 'react-native';
+ import { Button } from 'react-native-elements';
 
-    for(let key in password){
-        dataToSubmit[key]=password[key]
-    }
-    setLoading(true)
-     firebase.auth() 
-             .signInWithEmailAndPassword(
-                         dataToSubmit.email,
-                         dataToSubmit.password
-                                ).then(()=>{
-                                 
-                                    navigation.navigate('Root')
-                                }).catch(error=>{
-                                    setLoading(false)
-                                       Alert.alert(error.message)
-                                })
-                        }
+const appId = "1047121222092614"
 
-        const   toggleRememberMe = (value,email,password,setRememberMe,{navigation}) => {
-                            setRememberMe(value) 
-                              if (value === true) {
+export default class Login extends Component {
+  state={
+     email:'',
+     password:'',
+     Loading:false
+  }
 
-                                let dataToSubmit={};
-                                for(let key in email){
-                                  dataToSubmit[key]=email[key]
-                              }
-                          
-                              for(let key in password){
-                                  dataToSubmit[key]=password[key]
-                              }
-                            
-                               firebase.auth() 
-                                       .signInWithEmailAndPassword(
-                                                   dataToSubmit.email,
-                                                   dataToSubmit.password
-                                                          ).then(()=>{
-                                                              navigation.navigate('Root')
-                                                          }).catch(error=>{
-                                                                
-                                                                 Alert.alert(error.message)
-                                                          })
-                                                  }
-                            }
-                         
+  render() {
+  
+    return (
+      <KeyboardAvoidingView style={styles.containerView} behavior="padding">
 
-export default function Login({navigation}){
-    // const {phone,setPhone,email,setEmail}=useContext(UserContext)
-     const [email,setEmail]=useState('')
-    const [password,setPassword]=useState('')
- const [phone,setPhone]=useState('')
-    const [Loading,setLoading]=useState(false)
-    const [rememberMe,setRememberMe]=useState('')
- 
-    
-
-
-    return(
-        <View style={{flex:1,marginTop:-20,backgroundColor:'#12e607'}}>
-              <View style={{flexDirection:'row',borderBottomColor:"ash",borderBottomWidth:1,backgroundColor:'green',marginBottom:7,height:70}}>
-        <TouchableOpacity style={{marginTop:34}} onPress={()=>navigation.navigate('Main')}>
-        <AntDesign name="left" color="white" size={28} />
-        </TouchableOpacity> 
-             <Text style={{fontWeight:'bold',fontSize:17,color:'white',marginLeft:120,marginTop:44,marginBottom:5}}>Login</Text>
-
-        </View>
-
-            <View  style={{borderRadius:10,marginTop:50,width:"95%",marginLeft:8,height:"62%"}}>
-
-                <View style={{marginTop:20}}>  
-                <TextInput 
-               placeholder="Enter your email"
-               value={email}
-               onChangeText={email=>setEmail({email})}
-               
-               
-               style={{marginTop:10,marginBottom:20,backgroundColor:'white',height:50,width:"90%",marginBottom:-60,marginLeft:15,borderRadius:6}}
-               />
-
-               <TextInput
-               autoCorrect={false}
-               placeholder="Enter your Phone Number"
-               value={phone}
-               onChangeText={phone=>setPhone({phone})}
-               style={{marginTop:120,backgroundColor:'white',height:50,marginBottom:-50,width:"90%",marginLeft:15,borderRadius:6}}
-               />
-
-               <TextInput
-               autoCorrect={false}
-               secureTextEntry={true}
-               placeholder="Password"
-               value={password}
-               onChangeText={password=>setPassword({password})}
-               style={{marginTop:110,backgroundColor:'white',height:50,marginBottom:-50,width:"90%",marginLeft:15,borderRadius:6}}
-               />
-
-
-               <View style={{flexDirection:'row',marginLeft:12,marginTop:75}}>
-                 <Switch 
-                 style={{ transform:[{ scaleX: .7 }, { scaleY: .7 }] }} 
-                 value={rememberMe}
-                 onValueChange={(value) =>toggleRememberMe(value,email,password,setRememberMe,{navigation})} />
-                <Text style={{color:"white",fontWeight:"bold",fontSize:14,marginTop:8,marginLeft:-7}}>Remember Me</Text>
-                <TouchableOpacity onPress={()=>navigation.navigate('Forget')}>
-                <Text style={{marginLeft:39,color:"white",fontWeight:"bold",fontSize:14,marginTop:8}}>Forgot Password ? </Text>
-                </TouchableOpacity>
-                </View>
-
-
-
-
-           <TouchableOpacity   style={{marginTop:29,marginLeft:15,borderRadius:8}} onPress={()=>handleLogin(email,password,{navigation},setLoading)}>
-             <View  style={{height:45,width:"90%",backgroundColor:"green",marginLeft:4,borderRadius:8}}>
-                 <Text style={{color:"white",alignContent:'center',alignItems:"center",fontSize:17,fontWeight:"bold",marginLeft:122,marginTop:8}}>LOGIN</Text>
-             </View>
-            </TouchableOpacity>
-               {/* <View  style={{backgroundColor:"green",marginTop:29,height:45,width:"90%",marginLeft:15,borderRadius:7}}>
-                   <Button  color="white"  title="Login"  onPress={()=>handleLogin(email,password,{navigation},setLoading)}/>
-                
-               </View> */}
-               
-                 
-               {Loading &&
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.loginScreenContainer}>
+          <View style={styles.loginFormView}>
+          <Text style={styles.logoText}>DUAPA APP</Text>
+            <TextInput placeholder="E-Mail" onChangeText={(email)=>this.setState({email:email})} placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
+            <TextInput placeholder="Password"  onChangeText={(password)=>this.setState({password:password})} placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true}/>
+            <Button
+              buttonStyle={styles.loginButton}
+              onPress={() => this.onLoginPress()}
+              title="Login"
+            />
+                  
+             {this.state.Loading &&
                 <View style={{
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 360,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }}>
+               position: 'absolute',
+               left: 0,
+               right: 0,
+               top: 118,
+               bottom: 0,
+               alignItems: 'center',
+               justifyContent: 'center'
+                 }}>
                     
                     <ActivityIndicator size="large" color="#0000ff" />
                 </View>
             }
-                
 
-               </View>
 
-            </View>
-            <Text style={{marginLeft:100,marginTop:80}}>Not registered with Beit?</Text>
-            <TouchableOpacity onPress={()=>navigation.navigate('register')}>
-                <Text style={{marginLeft:131,marginTop:8,textDecorationLine: 'underline',color:'red'}}>Register now</Text>
+            <TouchableOpacity  >
+                <Text style={{textAlign:'center',height: 17, marginTop: 10,color:'green'}}>No account yet ?</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity onPress={()=>this.props.navigation.navigate('register')} >
+                <Text style={{textAlign:'center',marginTop:5,textDecorationLine: 'underline',color:'green'}}>Register now</Text>
+            </TouchableOpacity>
+{/*                 
+            <Button
+              buttonStyle={styles.fbLoginButton}
+             onPress={() => this.onFbLoginPress()}
+              title="Login with Facebook"
+              color="#3897f1"
+            /> */}
+          </View>
+          <View style={{flexDirection:'row'}}>
+          <Text style={{textAlign:'center',marginLeft:'24%'}}>SUPPORTED BY BEIT FARMS</Text>
+          <Image  source={require('../assets/images/logo.jpg')}   style={{borderRadius:20,height:20,width:20,marginLeft:10}}  />
+          </View>
         </View>
-    )
+        
+
+      </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    );
+  }
+
+  componentDidMount() {
+  }
+
+  componentWillUnmount() {
+  }
+
+  onLoginPress() {
+
+         this.setState({Loading:true})
+    
+        fetch('http://abyvoting.tk/login',{
+          method:"POST",
+          headers:{
+             'Accept':'application/json',
+             'Content-type':'application/json'
+          },
+            body:JSON.stringify({
+                
+                email:this.state.email,
+                password:this.state.password
+             })
+        })
+        .then((response)=>response.json())
+           .then((responseJSON)=>{
+            if(responseJSON.message==="Login Successful"){
+                 this.props.navigation.navigate('Root')
+            }
+            else
+              {
+                this.setState({Loading:false})
+           
+              Alert.alert(responseJSON.message)
+             this.props.navigation.navigate('login')
+        }
+        
+           })
+           .catch((error)=>{
+               this.setState({Loading:false})
+               Alert.alert(error.message)
+           })
+    }
+  
+  
+
+  async onFbLoginPress() {
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(appId, {
+      permissions: ['public_profile', 'email'],
+    });
+    if (type === 'success') {
+      const response = await fetch(
+        `https://graph.facebook.com/me?access_token=${token}`);
+      Alert.alert(
+        'Logged in!',
+        `Hi ${(await response.json()).name}!`,
+      );
+    }
+  }
 }
 
 
+const styles=StyleSheet.create({
 
-// const styles=StyleSheet.create({
-//     activity: {
-//         position: 'absolute',
-//         left: 0,
-//         right: 0,
-//         top: 230,
-//         bottom: 0,
-//         alignItems: 'center',
-//         justifyContent: 'center'
-//     },
-// })
+
+    containerView: {
+    flex: 1,
+  },
+  loginScreenContainer: {
+    flex: 1,
+  },
+  logoText: {
+    fontSize: 40,
+    fontWeight: "800",
+    marginTop: 150,
+    marginBottom: 30,
+    textAlign: 'center',
+  },
+  loginFormView: {
+    flex: 1
+  },
+  loginFormTextInput: {
+    height: 43,
+    fontSize: 14,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#eaeaea',
+    backgroundColor: '#fafafa',
+    paddingLeft: 10,
+    marginLeft: 15,
+    marginRight: 15,
+    marginTop: 5,
+    marginBottom: 5,
+  
+  },
+  loginButton: {
+    backgroundColor: 'green',
+    borderRadius: 3,
+    height: 45,
+    marginTop: 17,
+    width:'92%',
+    marginLeft:'4%'
+  },
+  fbLoginButton: {
+    
+    color:'green'
+  },
+  
+  
+
+})
