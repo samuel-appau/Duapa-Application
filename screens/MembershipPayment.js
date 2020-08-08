@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { Rave } from 'rave-reactnative-wrapper';
+import shortid from 'shortid';
 import {
   StyleSheet,
   Text,
@@ -7,98 +9,220 @@ import {
   TouchableOpacity,
   TextInput,
   Modal,
+  ScrollView,
+  CheckBox,
+  Alert
 } from 'react-native';
+import { Linking } from 'expo';
 // import { Formik } from 'formik';
 import { AntDesign,Ionicons } from '@expo/vector-icons';
 
-export default function MembershipPaymentForm({navigation}){
-
+export default function Membership({navigation}){
 
 const [fee,setFee] = useState(100);
+const [firstName,setfirstName]=useState('')
+const [lastName,setlastName]=useState('')
+const [email,setEmail]=useState('')
+const [phone,setPhone]=useState('')
+
+
+
+
+useEffect(()=>{
+  async function fetchData(){
+
+  const response=fetch('http://abyvoting.tk/profile',{
+  method:"GET",
+
+  })
+.then((response)=>response.json())
+   .then((responseJSON)=>{
+  //  Alert.alert(responseJSON)
+      setfirstName(responseJSON.first_name)
+      setlastName(responseJSON.last_name)
+      setEmail(responseJSON.email)
+      setPhone(responseJSON.mobile)
+   })
+   .catch((error)=>{
+     Alert.alert(error.message)
+   })
+
+  }
+   fetchData()
+
+
+})
+
+
+const onSuccess=(data)=> {
+  // PLEASE CALL THE FLUTTERWAVE VERIFY ENDPOINT TO CONFIRM TRANSACTION STATUS
+
+   console.log("success", data);
+
+   if(data!="undefined"){
+   fetch('http://abyvoting.tk/register-member',{
+    method:"GET",
+    headers:{
+       'Accept':'application/json',
+       'Content-type':'application/json'
+    },
+      // body:JSON.stringify({
+          
+      //     email:this.state.email,
+      //     password:this.state.password
+      //  })
+  })
+  .then((response)=>response.json())
+     .then((responseJSON)=>{
+      //  Alert.alert(responseJSON)
+      if(responseJSON.message==="registration successful"){
+           Alert.alert('You are now a member of beit farms')
+      }
+      else
+        {
+          
+     
+        Alert.alert("Member registration not successful")
+
+  }
+  
+     })
+     .catch((error)=>{
+        
+         Alert.alert(error.message)
+     })
+    }
+
+    else{
+      Alert.alert('Try again')
+    }
+
+    }
+   
+
+
+
+
+
+
+   // You get the complete response returned that comes from Rave,
+
+
+ 
+
+const onCancel=(data)=>{
+ // PLEASE CALL THE FLUTTERWAVE VERIFY ENDPOINT TO CONFIRM TRANSACTION STAT
+ Alert.alert(data)
+}
+
+const  onError=(data)=> {
+   //an error occoured
+// PLEASE CALL THE FLUTTERWAVE VERIFY ENDPOINT TO CONFIRM TRANSACTION STATUS
+
+ }
+
 
   return (
-    <View style={{flex:1}}>
-    <View style={{flexDirection:'row',borderBottomColor:"ash",borderBottomWidth:1,backgroundColor:'green',marginBottom:10,height:62}}>
-       <TouchableOpacity style={{marginTop:25}} onPress={()=>navigation.navigate('offTaker')}>
+    <View style={{flex:1,backgroundColor:'#f2f2f2'}}>
+      
+    <View style={{flexDirection:'row',borderColor:"ash",borderBottomWidth:1,backgroundColor:'green',marginBottom:10,height:62}}>
+       <TouchableOpacity style={{marginTop:25}} onPress={()=>navigation.navigate('Root')}>
         <AntDesign name="left" color="white" size={28}   />
         </TouchableOpacity>
-             <Text style={{fontWeight:'bold',fontSize:17,color:'white',marginLeft:115,marginTop:27,marginBottom:5}}>Payment</Text>
-           {/* <View style={{flexDirection:'row'}}>
-           <Ionicons name="ios-notifications" size={25} color="white"  style={{marginTop:23,marginLeft:120}}/>
-           <View  style={{borderRadius:40,width:17,height:17,backgroundColor:'red',alignItems:'center',justifyContent:'center',marginTop:-22.5,marginLeft:0}}>
-                  <Text style={{color:"white",fontSize:10}}>0</Text>
-                  </View>
-            </View> */}
 
-            <TouchableOpacity style={{marginLeft:110,marginTop:0}} >
+             <Text style={{fontWeight:'bold',fontSize:17,color:'white',marginLeft:60,marginTop:27,marginBottom:5}}>Membership Page</Text>
+           
+
+            <TouchableOpacity style={{marginLeft:90,marginTop:0}} >
              <View  style={{flex:2,}}>
-             <Ionicons name="ios-notifications" size={29} color="white"  style={{marginTop:23,marginLeft:0}}/>
-                <View  style={{borderRadius:40,width:17,height:17,backgroundColor:'red',alignItems:'center',justifyContent:'center',marginTop:-32,marginLeft:10.5}}>
-                  <Text style={{color:"white",fontSize:10,marginTop:-1.5,marginLeft:-1.0}}>0</Text>
-                  </View>
+             <AntDesign name="team"  size={29} color="white"  style={{marginTop:23,marginLeft:0}}  />
+
                 
           </View>
           </TouchableOpacity>
 
         </View>
-        <Text style={{marginLeft:17}}>To complete the membership form,you must pay an amount of GH₵100  to proceed </Text>
-        <View style={{height:260,width:'90%',marginLeft:17,marginTop:20,borderRadius:1,borderStyle:'dashed',borderWidth:1,borderWidthColor:'#c0c0c0'}}>
-
-        <TextInput placeholder="Enter Mobile Money number"  style={{borderColor:"#c0c0c0",borderWidth:1,marginLeft:12,height:35,marginTop:22,backgroundColor:'white',width:200}}/>
-
-        <TextInput placeholder="Enter Mobile Money PIN"  style={{borderColor:"#c0c0c0",borderWidth:1,marginLeft:12,height:35,marginTop:22,backgroundColor:'white',width:200}}/>
-        <View style={{flexDirection:'row'}}>
-        <TextInput placeholder="100" value={fee} style={{borderColor:"#c0c0c0",borderWidth:1,marginLeft:12,height:35,marginTop:22,backgroundColor:'white',width:80}}/>
-        <Text style={{fontSize:20,fontWeight:'bold',marginLeft:10,marginTop:25}}>GH₵</Text>
-        </View>
-        <TouchableOpacity style={{marginTop:30}}>
-                        <View style={{ padding: 11,backgroundColor:'green',marginLeft:10, width:"40%",marginHorizontal:5,shadowColor: '#000', shadowOffset: { width: 0, height: 2,},shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5,}}>
-                             <Text style={{color:"white",fontWeight:'bold',marginLeft:4,}}>Make-Payment</Text>
-                        </View>
-        </TouchableOpacity> 
-
+       <ScrollView>
+        <View style={{marginTop:20,borderBottomWidth:1,borderColor:'white'}}>
+        <Text style={{fontWeight:'500',fontSize:26,marginLeft:19}}>Register here!</Text>
         </View>
 
 
-        <Text style={{marginLeft:17,marginTop:20}}>Also note that as a member of Beit farms ,you will be  required to pay monthly dues of GH₵ 10 to Beit farms </Text>
-        <View style={{height:100,width:'90%',marginLeft:17,marginTop:20,borderRadius:1,borderStyle:'dashed',borderWidth:1,borderWidthColor:'#c0c0c0'}}>
-        <Text style={{marginTop:5,fontWeight:'bold'}}>If you agree with the condition,Click the button below to finish the process</Text>
-        <TouchableOpacity  style={{marginTop:6}}>
-                        <View style={{ padding: 11,backgroundColor:'blue',marginLeft:196, width:"40%",marginHorizontal:5,shadowColor: '#000', shadowOffset: { width: 0, height: 2,},shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5,}}>
-                             <Text style={{color:"white",fontWeight:'bold',marginLeft:40}}>I Accept</Text>
-                        </View>
-        </TouchableOpacity> 
+        <View style={{marginTop:29,backgroundColor:'white',width:'90%',marginLeft:20,height:'60%'}}>
+          <View style={{borderBottomWidth:1,borderColor:'#d3d3d3',marginTop:10,}}>
+          <Text style={{marginBottom:12,fontSize:22,fontWeight:'500',marginLeft:16}}>Become a registered member</Text>
 
-        </View>
+          </View>
+         
 
-          <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginHorizontal: 10,
-                  marginTop:30,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('offTaker')}
-                  style={[styles.btn, { backgroundColor: '#ddd' }]}
-                >
-                  <AntDesign name="close" size={30} color="#000" />
+         <View style={{marginTop:19}}>
+         <Text style={{fontSize:15,fontWeight:'500',marginLeft:10}}>
+             Payment of GH₵ 100 is needed for you to become
+             a registered member of Beit farms.
+             You get to enjoy the following privileges:
+              </Text>
+             <Text style={{marginTop:10,fontSize:15,fontWeight:'500',marginLeft:10}}>-Loan application</Text>
+             <Text style={{marginTop:5,fontSize:15,fontWeight:'500',marginLeft:10}}>-Post and sell farm produce</Text>
+
+            
+             
+
+        
+        <View style={{marginTop:20,alignSelf:'center',backgroundColor:'green',padding:11}}>
+
+       <TouchableOpacity>
+        <Rave
+                buttonText="Proceed to make payment"
+                raveKey="FLWPUBK_TEST-92aea70bab0011147feb15beacb12e32-X"
+                amount={fee}
+                currency={'GHS'}
+                country={'GH'}
+                customerEmail={email}
+                customerPhone={phone}
+                customer_firstname={firstName}
+                customer_lastname={lastName}
+                ActivityIndicatorColor="green"
+                payment_options="mobilemoneyghana"
+                onCancel={()=>onCancel()}
+                onSuccess={()=>onSuccess()}
+                onError={()=>onError()}
+                txref={shortid()}
+                
+                />
                 </TouchableOpacity>
-                <TouchableOpacity
-                   onPress={()=>navigation.navigate('Root')} 
-                  style={[
-                    styles.btn,
-                    { marginLeft: 10, backgroundColor: '#F9A91E' },
-                  ]}
-                >
-                  <AntDesign name="check" size={30} color="#fff" />
-                </TouchableOpacity>
-              </View>
-       
-     
 
-    </View>
+                </View>
+
+          </View>
+
+          
+        </View>
+
+
+
+        <View style={{marginTop:39,marginBottom:20,backgroundColor:'white',width:'90%',marginLeft:20,height:'25%'}}>
+          <View style={{borderBottomWidth:2,borderColor:'#d3d3d3',marginTop:20,}}>
+          <Text style={{marginBottom:36,fontSize:16,fontWeight:'bold',marginBottom:10,marginLeft:13}}>Agree to the membership agreement</Text>
+
+
+          </View>
+
+          <Text style={{fontSize:15,fontWeight:'500',marginLeft:13,marginTop:12}}>
+            As a member of beit farms you must pay 
+            a monthly dues of GH₵ 20
+            </Text>
+
+            {/* <CheckBox
+            name="Agree to the Terms and Agreement"
+            style={{}}
+            /> */}
+
+          </View>
+         
+
+
+  </ScrollView>
+        </View>
   );
 };
 

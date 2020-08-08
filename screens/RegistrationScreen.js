@@ -1,7 +1,7 @@
 import React,{useState,useContext} from 'react'
-import {Text,View,StyleSheet,ActivityIndicator,TextInput,Button,Switch,TouchableOpacity,ScrollView,Alert,Image}  from 'react-native'
+import {Text,View,StyleSheet,Keyboard,ActivityIndicator,TextInput,Button,Switch,TouchableWithoutFeedback,KeyboardAvoidingView,TouchableOpacity,ScrollView,Alert,Image}  from 'react-native'
 import {Ionicons,FontAwesome,AntDesign,Entypo,EvilIcons} from '@expo/vector-icons'
-import {UserContext} from '../context/UserContext'
+
 
 
 
@@ -87,8 +87,10 @@ export default  function RegisterScreen({navigation}){
     
 
     return(
+        // <KeyboardAvoidingView style={{flex:1}} behavior="padding">
+        // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{flex:1}}>
-             <View style={{flexDirection:'row',borderBottomColor:"ash",borderBottomWidth:1,backgroundColor:'green',marginBottom:7,height:68}}>
+             <View style={{flexDirection:'row',borderBottomColor:"ash",borderBottomWidth:1,backgroundColor:'green',marginBottom:1,height:68}}>
         <TouchableOpacity style={{marginTop:25}} onPress={()=>navigation.navigate('login')}>
         <AntDesign name="left" color="white" size={28}  />
         </TouchableOpacity> 
@@ -98,9 +100,11 @@ export default  function RegisterScreen({navigation}){
         <ScrollView>
             <View>
             <Image  source={require('../assets/images/logo.jpg')} style={{height:230,width:'100%',marginTop:-16}}/>
+           
             </View>
             <View>
-                <View style={{flexDirection:'row',marginTop:33,marginLeft:5}}>
+            {/* <Text style={{marginTop:-130,color:'white',fontWeight:'bold',fontSize:36,marginLeft:20}}>Register with Beit farms</Text> */}
+                <View style={{flexDirection:'row',marginTop:30,marginLeft:5}}>
                 <View style={{backgroundColor:'green',height:40,width:80}}>
                 <Text style={{color:'white',marginTop:10,fontWeight:'bold',fontSize:14}}>First Name</Text>
                    </View>
@@ -210,7 +214,9 @@ export default  function RegisterScreen({navigation}){
             </ScrollView>
 
 
-        </View>
+            </View>
+        //   </TouchableWithoutFeedback>>
+        // </KeyboardAvoidingView>
 
 
     )

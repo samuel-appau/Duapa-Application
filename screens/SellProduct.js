@@ -1,5 +1,5 @@
 import  React,{Component} from 'react'
-import { Button, Image, View,StyleSheet,Text,TextInput,ScrollView,TouchableOpacity} from 'react-native'
+import {Keyboard, Button, Image, View,StyleSheet,Text,TextInput,Alert,ScrollView,ActivityIndicator,TouchableWithoutFeedback,KeyboardAvoidingView,TouchableOpacity} from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 import Constants from 'expo-constants'
 import * as Permissions from 'expo-permissions'
@@ -7,93 +7,107 @@ import {Ionicons,FontAwesome,AntDesign,Entypo,EvilIcons} from '@expo/vector-icon
 
 
   
-    
-  
 export default class SellProduce extends Component{
           
         state = {
-            LocalImage:[],
-            multipleUrl:[],
+            LocalImage:null,
             mode:true,
             nameOfProduct:'',
             price:'',
+            id:'',
             description:'',
             title:'',
             name:'',
             contact:'',
-            location:''
-            }
-            componentDidMount() {
-               this.getPermissionAsync()
-            }
-            getPermissionAsync = async () => {
-                 if (Constants.platform.ios) {const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
-            if (status !== 'granted') {
-                     alert('Sorry, we need camera roll permissions to make this work!')
-                  }
-            }
+            location:'',
+            usertype:'',
+            Loading:false,
+           
             }
 
 
+         
+
+
+            handlePost=async ()=>{
+
+
+                
+              this.setState({Loading:true})  
+            // Alert.alert(this.state.LocalImage)
+            //   const formData = new FormData();
+            
+            //   formData.append('user_id', this.state.id);
+            //   formData.append('category', "1");
+            //   formData.append('sub_category', "1");
+            //   formData.append('price', this.state.price);
+            //   formData.append('location_id',"0");
+            //   formData.append('featured_listing', "1");
+            //   formData.append('title', this.state.title);
+            //   formData.append('listing_slug',"");
+            //   formData.append('description', this.state.description);
+            //   formData.append('address', this.state.location);
+
+           
+
+             
+              const sourceAsString = this.state.LocalImage.toString();
+            
+              const fileName = sourceAsString.split('/').pop();
+            
+            // //   alert(fileName)
+            //   formData.append('featured_image', {
+            //     uri: sourceAsString,
+            //     type: 'image/jpg',
+            //     name: fileName,
+            //   });
+        //    formData.append('featured_image',fileName);
+              Alert.alert(this.state.id)
+            
+            // Alert.alert(JSON.stringify(this.state.LocalImage))
+
+            fetch("http://abyvoting.tk/submit_listing",{
+                method:"POST",
+                headers:{
+                'Accept':'application/json',
+                'Content-type':'application/json'
+                     },
+             body:JSON.stringify({
+                user_id:this.state.id,
+                category:"1",
+                sub_category: "1",
+                price:this.state.price,
+                location_id: "0",
+                featured_listing:"1" ,
+                title:this.state.title,
+                listing_slug: "",
+                description:this.state.description,
+                address: this.state.location,
+                featured_image:fileName,
+                         })
+                        })
+         .then((response)=>response.text())
+            .then((responseJSON)=>{
+                this.setState({Loading:false})
+                Alert.alert(responseJSON)
+              Alert.alert("Product has been sent for review")    
+            })
+            .catch((error)=>{
+                Alert.alert("Network Error")
+            })
+        
+      
+
+        }
 
             
    
   
-        handlePost(){
-         fetch("http://abyvoting.tk/submit_listing",{
-             method:"POST",
-             headers:{
-             'Accept':'application/json',
-             'Content-type':'application/json'
-                  },
-          body:JSON.stringify({
-                
-                total:this.state.price,
-                per_page:10,
-                current_page:1,
-                last_page:0,
-                next_page_url:null,
-                prev_page_url:null,
-                from:null,
-                to:null,
-                data:[{
-                  "id": 1,
-                  "user_id": "2",
-                  "cat_id": "1",
-                  "sub_cat_id": "1",
-                  "price": "20",
-                  "location_id": "0",
-                  "featured_listing": "1",
-                  "title": "Fertilizer",
-                  "listing_slug": "fertilizer",
-                  "description": "<p>Sample fertilizer</p>",
-                  "address": "Tamale",
-                  "featured_image": "fertilizer_1594821586",
-                  "review_avg": "",
-                  "status": "1",
-                  "created_at": "2020-07-15 13:59:46",
-                  "updated_at": "2020-07-15 14:00:06"
-                }]
-              
-              
-          })
-      })
-      .then((response)=>response.json())
-         .then((responseJSON)=>{
-           Alert.alert(responseJSON)
-           Alert.alert("Product has been sent for review")
-             
-         })
-         .catch((error)=>{
-             Alert.alert(error)
-         })
-        }
-          
-   
-    
+       
+        
 
     componentDidMount(){
-      return  fetch('http://abyvoting.tk/profile',{
+       fetch('http://abyvoting.tk/profile',{
           method:"GET",
     
           })
@@ -102,7 +116,7 @@ export default class SellProduce extends Component{
           
             this.setState({
              
-               
+                id:JSON.stringify(responseJSON.id),
                 contact:responseJSON.mobile,
                 name:responseJSON.first_name + responseJSON.last_name
               
@@ -115,72 +129,73 @@ export default class SellProduce extends Component{
            })
         
         }
-
+  
+ 
+  
         
     _renderImages(){
-      // this.setState({
-      //   mode:false
-      // })
-        let images = []
         
-        this.state.LocalImage.map((item, index) => {
-           images.push(
-             <View   key={index}  style={{flexDirection:'row',marginLeft:16,justifyContent:'space-between'}}>
-             
-             <Image source={{ uri: item }}  style={{ width:   100, height: 100,marginLeft:-10 }} />
-             <TouchableOpacity >
-             <AntDesign name="minuscircle" color='red' size={16}  style={{marginTop:-5}}/>
-             </TouchableOpacity>
-             
-             </View>
-             )
-           })
-        return images
+         
+        <View     style={{marginLeft:2,alignSelf:'center'}}>
+        {
+    this.state.LocalImage &&
+    <Image source={{ uri:this.state.LocalImage}}  style={{ width:'90%', height: 160}} />}
+    <TouchableOpacity>
+    <AntDesign name="minuscircle" color='red' size={16}  style={{marginTop:-5}}/>
+    </TouchableOpacity>
+    
+        
+    </View>
+
       }
 
 
       
 
       _pickImage = async () => {
-      this.setState({
-        mode:false
-       })
+        this.setState({
+            mode:false
+           })
+
+
       
-        let pickerResult = await ImagePicker.launchImageLibraryAsync({
+        let result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.All,
-          base64: true,
           allowsEditing: true,
           aspect: [4, 3],
-        })
-        let imageUri = pickerResult ?   `data:image/jpg;base64,${pickerResult.base64}` : null
-         imageUri && {uri: imageUri}
-         this.state.multipleUrl.push(imageUri)
-          this.setState({
-      LocalImage: this.state.LocalImage.concat([pickerResult.uri]),
-      })
-      }
-
-    handleDescription=(text)=>{
-      this.setState({description:text})
-
-    }
-
-    handleTitle=(text)=>{
-      this.setState({title:text})
-    }
+          quality: 1
+        });
     
+        if (!result.cancelled) {
+            this.setState({
+                LocalImage:result.uri
+            }
+            );
+        }
+      };
+    
+    
+      
+    //     let pickerResult = await ImagePicker.launchImageLibraryAsync({
+    //       mediaTypes: ImagePicker.MediaTypeOptions.All,
+    //       base64: true,
+    //       allowsEditing: true,
+    //       aspect: [4, 3],
+    //     })
+    //     let imageUri = pickerResult ?   `data:image/jpg;base64,${pickerResult.uri}` : null
+    //      imageUri && {uri: imageUri}
+    //      this.state.multipleUrl.push(imageUri)
+    //       this.setState({
+    //   LocalImage: this.state.LocalImage.concat([pickerResult.uri]),
+    //   })
+    //   }
 
-    handleProduct=(text)=>{
-      this.setState({nameOfProduct:text
-      })
-    }
-
-    handlePrice=(text)=>{
-      this.setState({price:text})
-    }
+  
 
     render() {
        return (
+        <KeyboardAvoidingView style={{flex:1}} behavior="padding">
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.mainView}>
               
               <View style={{flexDirection:'row',borderBottomColor:"ash",borderBottomWidth:1,backgroundColor:'green',marginBottom:10,height:62}}>
@@ -192,21 +207,18 @@ export default class SellProduce extends Component{
                 </View>
                 <ScrollView>
                <View style={styles.buttons}>
-                     <Button title="Pick images of farm produce to sell"  onPress={this._pickImage}/>
+                     <Button title="Pick images of farm produce to sell"  color='green' onPress={this._pickImage}/>
                </View>
-               {/* <View style={styles.buttons}>
-                     <Button onPress={this._takePhoto} title="Take a photo" />
-               </View>
-                */}
+              
                 <View >
                   {this.state.mode===true  ?
                   (
 
                     
-                    <View style={{backgroundColor:'#fff',height:110,width:'100%'}}>
+                    <View style={{backgroundColor:'#fff',height:160,width:'100%'}}>
                             <TouchableOpacity>
 
-                             <AntDesign name='addfile' size={90} color='black' style={{marginTop:7,marginLeft:'34%'}} />
+                             <EvilIcons name='image' size={110} color='black' style={{marginTop:18,marginLeft:'34%'}} />
                             </TouchableOpacity>
                         </View>
                    
@@ -216,7 +228,15 @@ export default class SellProduce extends Component{
                   
                   
                     <View  style={styles.containers}>
-                    {this._renderImages()}
+                    <View     style={{alignSelf:'center'}}>
+                 {
+             this.state.LocalImage &&
+             <Image source={{ uri:this.state.LocalImage}}  style={{ width:350, height: 180,marginLeft:8 }} />}
+            
+             
+                 
+             </View>
+         
                   </View>
                   
 
@@ -237,26 +257,24 @@ export default class SellProduce extends Component{
              <TextInput  
              placeholder="Title"   
              
-             onChangeText={this.handleTitle}
+             onChangeText={(title)=>this.setState({title:title})}
              style={{marginLeft:'5%',height:40,marginTop:38,backgroundColor:'white',width:'92%',borderColor:"#c0c0c0",borderBottomWidth:1}}/>
              <TextInput  
              
-             onChangeText={this.handleProduct}
+             onChangeText={(nameOfProduct)=>this.setState({nameOfProduct:nameOfProduct})}
              placeholder="Name of farm Product"   
              style={{marginLeft:'5%',height:40,marginTop:38,backgroundColor:'white',width:'92%',borderColor:"#c0c0c0",borderBottomWidth:1}}/>
              <TextInput  
              placeholder="Description" 
            
-             onChangeText={this.handleDescription}
+             onChangeText={(description)=>this.setState({description:description})}
              multiline={true}  
-             style={{marginLeft:'5%',height:40,marginTop:38,backgroundColor:'white',width:'92%',borderColor:"#c0c0c0",borderBottomWidth:1}}/>
+             style={{marginLeft:'5%',height:60,marginTop:38,backgroundColor:'white',width:'92%',borderColor:"#c0c0c0",borderBottomWidth:1}}/>
 
              <TextInput  
              placeholder="Price(GH₵)"  
              autoFocus  keyboardType="phone-pad"
-             
-
-             onChangeText={this.handlePrice}
+             onChangeText={(price)=>this.setState({price:price})}
              style={{marginLeft:'5%',height:40,marginTop:38,backgroundColor:'white',width:'92%',borderColor:"#c0c0c0",borderBottomWidth:1}}/>
             </View>
 
@@ -277,27 +295,46 @@ export default class SellProduce extends Component{
                <TextInput  
                  placeholder="Name"   
                  value={this.state.name}
+                 /* onChangeText={(name)=>this.setState({name:name})} */
                  style={{marginLeft:'5%',height:40,marginTop:38,backgroundColor:'white',width:'92%',borderColor:"#c0c0c0",borderBottomWidth:1}}/>
 
                  <TextInput  
                  placeholder="Contact Number" 
-                 value={this.state.contact}  
+                 value={this.state.contact}
+                 /* onChangeText={(contact)=>this.setState({contact:contact})}  */
                  style={{marginLeft:'5%',height:40,marginTop:38,backgroundColor:'white',width:'92%',borderColor:"#c0c0c0",borderBottomWidth:1}}/>
 
                  
                  <TextInput  
-                 placeholder="Location"   
+                 placeholder="Location"  
+                 onChangeText={(location)=>this.setState({location})} 
                  style={{marginLeft:'5%',height:40,marginTop:38,backgroundColor:'white',width:'92%',borderColor:"#c0c0c0",borderBottomWidth:1}}/>
 
                  </View>
-
+ 
+                <View>
                  <TouchableOpacity  onPress={this.handlePost} style={{marginTop:17}}>
                         <View style={{ padding: 9,backgroundColor:'green',marginLeft:'4%', width:"94%",marginHorizontal:5,shadowColor: '#000', shadowOffset: { width: 0, height: 2,},shadowOpacity: 0.25, shadowRadius: 3.84,elevation: 5,}}>
                              <Text style={{color:"white",fontWeight:'bold',fontSize:17,marginLeft:'38%',}}>Post Product</Text>
                         </View>
               </TouchableOpacity>
+                    {this.state.Loading &&
+                <View style={{
+               position: 'absolute',
+               left: 0,
+               right: 0,
+               top: 8,
+               bottom: 0,
+               alignItems: 'center',
+               justifyContent: 'center'
+                 }}>
+                    <ActivityIndicator size="large" color="#0000ff" />
+                </View>
+            }
 
-                 </View>   
+                 </View>  
+
+                 </View> 
                
 
                  </ScrollView>
@@ -305,18 +342,24 @@ export default class SellProduce extends Component{
             
                
             </View>
+            </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
     
           )
-       }
-    }
 
+
+          
+       }
+      }       
+
+       
     const styles=StyleSheet.create({
         containers:{
             flex:1,
             flexDirection:'row',
             marginTop:4,
             backgroundColor:'#fff',
-            height:110,
+            height:190,
         },
         buttons:{
             marginLeft:1, 
@@ -324,6 +367,6 @@ export default class SellProduce extends Component{
         },
         mainView:{
             flex:1,
-            backgroundColor:'#dcdcdc'
+            backgroundColor:'#f2f2f2'
         }
     })

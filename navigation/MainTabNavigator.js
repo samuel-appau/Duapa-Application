@@ -37,7 +37,9 @@ HomeStack.navigationOptions = {
     />
   ),
   tabBarOptions:{
-    style:{backgroundColor:'green'}
+    style:{backgroundColor:'green'},
+  
+    activeTintColor:'#172b6e'
 }
  
 };
@@ -57,7 +59,8 @@ ContactStack.navigationOptions = {
     <AntDesignIcon name="customerservice" focused={focused} />
   ),
   tabBarOptions:{
-    style:{backgroundColor:'green'}
+    style:{backgroundColor:'green'},
+    activeTintColor:'#172b6e'
 }
 };
 
@@ -76,7 +79,9 @@ LoanStack.navigationOptions = {
     <FontAwesomeIcon focused={focused} name="credit-card" />
   ),
   tabBarOptions:{
-    style:{backgroundColor:'green'}
+    style:{backgroundColor:'green'},
+    activeTintColor:'#172b6e'
+
 }
 };
 

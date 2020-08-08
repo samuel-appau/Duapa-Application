@@ -18,7 +18,7 @@ const Onboarding = ({ navigation }) => {
         <View style={styles.imageSlide}>
           <ImageBackground
             style={styles.img}
-            source={require('../assets/images/swiper1.jpg')}
+            source={require('../assets/images/flower1.jpg')}
           >
             <View
               style={{
@@ -29,13 +29,13 @@ const Onboarding = ({ navigation }) => {
               }}
             >
               <Text style={styles.quote}>
-                For verily I say unto you, That whosoever shall say unto this
-                mountain, Be thou removed, and be thou cast into the sea; and
-                shall not doubt in his heart, but shall believe that those
-                things which he saith shall come to pass; he shall have
-                whatsoever he saith. Therefore I say unto you, What things
-                soever ye desire, when ye pray, believe that ye receive them,
-                and ye shall have them.
+                Welcome to Duapa App!, We are happy to have you onboard.
+
+                DUAPA is an ICT farmer-led mobile platform to support access
+                to food production information and technologies through 
+                extension services.
+
+
               </Text>
               <Text
                 style={{
@@ -45,15 +45,15 @@ const Onboarding = ({ navigation }) => {
                   fontSize: 18,
                 }}
               >
-                -Mark 11:23
+                -DUAPA APP
               </Text>
             </View>
           </ImageBackground>
         </View>
         <View style={styles.imageSlide}>
           <ImageBackground
-            style={styles.img}
-            source={require('../assets/images/swiper1.jpg')}
+          style={styles.img}
+            source={require('../assets/images/swipe-img-1.jpg')}
           >
             <View
               style={{
@@ -63,14 +63,61 @@ const Onboarding = ({ navigation }) => {
                 margin: 30,
               }}
             >
-            <Text style={styles.quote}>
-                Welcome to Preach. Here we provide you with all the sermons from
-                your church services. You must be registered on this app to
-                provide important details such as your name, email address and
-                the church you attend. You will be notified when new sermons
-                from your church services are made available. You would be able
-                to listen to these sermons, read notes from the sermons and
-                download them as well.
+            <Text style={styles.quote1}>
+                Create an account with Duapa to enjoy services and
+                priviledges that comes with the mobile application.
+                Here we provide users access to available AgroInputs and help 
+                them sell produce from  thier farm.
+                You must register as a member to  enjoy full services
+                that comes with DUAPA application
+              </Text>
+            </View>
+          </ImageBackground>
+        </View>
+
+
+
+        <View style={styles.imageSlide}>
+          <ImageBackground
+          style={styles.img}
+            source={require('../assets/images/plant.jpg')}
+          >
+            <View
+              style={{
+                flex: 8,
+                justifyContent: 'center',
+                alignItems: 'center',
+                margin: 30,
+              }}
+            >
+            <Text style={styles.quote2}>
+                Feel free to ask all necessary questions on the 
+                platform by going to the customer service screen 
+                on the main dashboard of the DUAPA application
+                You can get intouch with a customer service agent
+                through the following means: call, email and SMS
+              </Text>
+            </View>
+          </ImageBackground>
+        </View>
+
+
+
+        <View style={styles.imageSlide}>
+          <ImageBackground
+          style={styles.img}
+            source={require('../assets/images/swipe-img-4.jpg')}
+          >
+            <View
+              style={{
+                flex: 8,
+                justifyContent: 'center',
+                alignItems: 'center',
+                margin: 30,
+              }}
+            >
+            <Text style={styles.quote2}>
+              
               </Text>
             </View>
           </ImageBackground>
@@ -108,8 +155,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#FFF',
     textAlign: 'center',
+    fontWeight:'bold'
+  },
+  quote1:{
+    fontSize:18,
+    color:'#FFF',
+    fontWeight:'bold'
+  },
+  quote2:{
+    fontSize:18,
+    color:'#000',
+    fontWeight:'bold'
   },
   btn: {
     margin: 40,
+    
   },
 });

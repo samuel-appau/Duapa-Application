@@ -18,6 +18,7 @@ const Search = () => {
       <TextInput
         style={styles.textInput}
         placeholder="Search for something"
+        placeholderTextColor='white'
         value={searchText}
         onChangeText={(searchText) => setsearchText(searchText)}
       ></TextInput>

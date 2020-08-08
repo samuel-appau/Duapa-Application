@@ -18,13 +18,17 @@ import OffTaker from '../screens/OffTakers'
 import MainTabNavigator from './MainTabNavigator';
 import CartScreen from '../screens/CartScreen'
 import BuyScreen from '../screens/BuyScreen'
-import MembershipPaymentForm from '../screens/MembershipPayment'
+import Membership from '../screens/MembershipPayment'
 import BorrowScreen from '../screens/borrow'
 import DifferentAmountScreen from '../screens/DifferentAmount';
 import SellProduce from '../screens/SellProduct'
 import HelpScreen from '../screens/HelpScreen'
 import AccountScreen from '../screens/AccountSettings'
 import NotificationScreen from '../screens/NotificationScreen'
+import ViewProduct from '../screens/ViewProduct'
+import ChangePasswordScreen from '../screens/ChangePassword'
+import Forgot from '../screens/ForgotPassword'
+
 const WIDTH=Dimensions.get('window').width;
 
 const DrawerConfig={
@@ -39,20 +43,23 @@ const DrawerConfig={
 
 const DrawerNavigator=createDrawerNavigator({
   
-  Home:{ 
+  Dashboard:{ 
       screen:MainTabNavigator
   },
   Logout:{
     screen:Login
   },
-  Help:{
-    screen:HelpScreen
+  Member:{
+    screen:Membership
   },
-  Account:{
+  Profile:{
     screen:AccountScreen
   },
   Notification:{
     screen:NotificationScreen
+  },
+  Change:{
+    screen:ChangePasswordScreen
   }
   
   
@@ -66,22 +73,24 @@ const DrawerNavigator=createDrawerNavigator({
 
 export default createAppContainer(
   createSwitchNavigator({
+    //Onboarding
      Main:Onboarding,
      register:RegisterScreen,
-     login:Login, login:Login,
+     login:Login,
+     Notification:NotificationScreen,
      Root:DrawerNavigator,
-     
      payment:PaymentScreen,
      agroInput:AgroInput,
      contact:CallScreen,
-     offTaker:OffTaker,
      cart:CartScreen,
      buy:BuyScreen,
-     memPay:MembershipPaymentForm,
+     member:Membership,
      borrow:BorrowScreen,
      different: DifferentAmountScreen,
      sell:SellProduce,
-     account:AccountScreen
+     account:AccountScreen,
+     produce:ViewProduct,
+     forgot:Forgot
   })
 );
 
